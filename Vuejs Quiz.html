@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <title>Hello World</title>
+            <meta charset="utf-8">
+            <link rel="stylesheet" type="text/css" href="style.css">
+            <script src = https://cdn.jsdelivr.net/npm/vue></script>
+            <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+        </head>
+        
+        <body>
+
+                <div id="app">
+                    
+                    <h1>{{ quiz.title }}</h1>
+                        
+                    <div v-for="(question, index) in quiz.questions">
+                         
+                        <div v-show="index === questionIndex">
+                            
+                            <h2>{{ question.text }}</h2>
+                            
+                            <ol>
+                                <li v-for="response in question.responses">
+                                
+                                    <label>
+                                 
+                                        <input type="radio" 
+                                            v-bind:value="response.correct" 
+                                            v-bind:name="index" 
+                                            v-model="userResponses[index]"> {{response.text}}
+                                    
+                                    </label>
+                              
+                                </li>
+                            
+                            </ol>
+                           
+                            <button v-if="questionIndex > 0" v-on:click="prev">
+                              Previous Question
+                            </button>
+                            
+                            <button v-on:click="next">
+                              Next Question
+                            </button>
+                          
+                        </div>
+                        
+                    </div>
+                        
+                    <div v-show="questionIndex === quiz.questions.length">
+                        
+                        <h2>
+                            Quiz Complete!
+                        </h2>
+                          
+                        <p>
+                            Total score: {{ score() }} / {{ quiz.questions.length }}
+                        </p>
+                        
+                    </div>
+                      
+                </div>
+
+                <script>
+              
+                    window.onload=function() {
+
+                    var quiz = {
+                        title: "The Marvelous Marvel Quiz!",
+                        questions: [
+                          
+                        {
+                            text: "1. What is Wolverines Civilian Name?",
+                            responses: [
+                                {text: "Creed"},
+                                {text: "Logan", correct: true},
+                                {text: "Legion"},
+                                {text: "Peter"},
+                                ]
+                        },
+                          
+                        {
+                            text: "2. What War did Captian America Fight in?",
+                            responses: [
+                                {text: "WW1", correct: true},
+                                {text: "WW2"},
+                                {text: "The War of 1812"},
+                                {text: "The Cold War"},
+                                ]
+                        },
+
+                        {
+                            text: "3. What happend to Captian America In Battle?",
+                            responses: [
+                                {text: "He was killed in action"},
+                                {text: "He was horribly woulded in battle"},
+                                {text: "He was frozen in the ocean", correct: true},
+                                {text: "He took a bullet for a friend"},
+                            ]
+                        },
+
+                        {
+                            text: "4. Who are the Members of The Fantastic Four?",
+                            responses: [
+                                {text: "Richard, Sue, Ben, Johnny", correct: true},
+                                {text: "Reed, Sue, Ben, Johnny"},
+                                {text: "Richard, Sue, Thing, Johnny"},
+                                {text: "Reed, Sue, Victor, Human Tourch"},
+                            ]
+                        },
+
+                        {
+                            text: "5. How Did The Fantastic Four Get Their Powers?",
+                            responses: [
+                                {text: "They're Mutiants"},
+                                {text: "They Wished Upon a Galactic Star"},
+                                {text: "They Were Exposed to Radioactive Rays"},
+                                {text: "They Were Exposed to Cosmic Rays", correct: true},
+                            ]
+                        },
+
+                        {
+                            text: "6. What is Galactis?",
+                            responses: [
+                                {text: "The Name of 12 Galaxies Combined"},
+                                {text: "A Cosmic Cloud, Able to Distroy Planets"},
+                                {text: "A Cosmic Being Who Feeds off of the Planets Energy to Survive", correct: true},
+                                {text: "The Name of Johnny Storm's Victory Dance"},
+                            ]
+                        },
+
+                        {
+                            text: "7. Who Founded the X-Men?",
+                            responses: [
+                                {text: "Charles Xavior", correct: true},
+                                {text: "Eric Lenscher"},
+                                {text: "Storm"},
+                                {text: "Cyclops"},
+                            ]
+                        },
+
+                        {
+                            text: "8. Who is Venom?",
+                            responses: [
+                                {text: "An Evil Alien Seeking to Distroy the World"},
+                                {text: "An Alien Life Form That Bonds with a Person in a Symbiotic Relationship", correct: true},
+                                {text: "An Experiment gone wrong. Half man, Half Viper."},
+                                {text: "A Super Hero Capable of Producing a Small Amount of Venom"},
+                            ]
+                        },
+
+                        {
+                            text: "9. What is Spider-Man's Real Name?",
+                            responses: [
+                                {text: "Ben Parker"},
+                                {text: "Wade Wilson"},
+                                {text: "Peter Parker", correct: true},
+                                {text: "Eddie Brock"},
+                            ]
+                        },
+
+                        {
+                            text: "10. Who is Iron Man?",
+                            responses: [
+                                {text: "Steve Rogers"},
+                                {text: "Nick Fury"},
+                                {text: "I Am Iron Man"},
+                                {text: "Tony Stark", correct: true},
+                            ]
+                        },
+
+                        ]
+                    };
+              
+
+              
+                new Vue({
+                    el: '#app',
+                        data: {
+                        quiz: quiz,
+                   
+                        questionIndex: 0,
+                   
+                        userResponses: Array(quiz.questions.length).fill(false)
+                    },
+                    
+                    methods: {
+                   
+                        next: function() {
+                            this.questionIndex++;
+                        },
+                        
+                        prev: function() {
+                            this.questionIndex--;
+                        },
+                        
+                        score: function() {
+                            return this.userResponses.filter(function(val) { return val }).length;
+                                }
+                            }
+                        })
+                    }
+            
+            </script>
+
+            
+        </body>
+    </html>
